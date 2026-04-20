@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Car | Veluxe Motors Seller Module</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="add-car">
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="register.html">
+        <span class="brand-mark">V</span>
+        <span class="brand-copy">
+          <strong>Veluxe Motors</strong>
+          <small>Seller Module</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="register.html">Register</a>
+        <a href="login.html">Login</a>
+        <a href="add-car.html" class="is-active">Add Car</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container narrow">
+      <section class="seller-hero seller-hero-add reveal">
+        <div class="seller-hero-copy">
+          <p class="eyebrow">Vehicle publishing</p>
+          <h2>Present each car like a premium listing.</h2>
+          <p>Add a vehicle with the key sales details buyers expect first: model, year, colour, location, price, and image.</p>
+          <div class="seller-tags">
+            <span>Clean form flow</span>
+            <span>Luxury visual tone</span>
+            <span>Instant local save</span>
+          </div>
+        </div>
+        <div class="listing-preview" aria-hidden="true">
+          <div class="preview-top">
+            <span class="preview-badge">Featured</span>
+            <span class="preview-price">CNY 258,000</span>
+          </div>
+          <div class="preview-car">
+            <div class="preview-road"></div>
+            <div class="preview-car-shell"></div>
+            <div class="preview-wheel preview-wheel-left"></div>
+            <div class="preview-wheel preview-wheel-right"></div>
+          </div>
+          <div class="preview-meta">
+            <strong>BMW 530i</strong>
+            <span>Obsidian Black • 2022</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-heading left">
+        <p class="eyebrow">Seller listing</p>
+        <h1>Add a new vehicle advertisement</h1>
+        <p>Submit a seller listing with the required car fields. This seller-only demo stores the listing locally in the browser.</p>
+      </div>
+
+      <form class="panel form-panel reveal reveal-delay-1" id="addCarForm" novalidate>
+        <div class="form-grid">
+          <label class="field">
+            <span>Colour</span>
+            <input type="text" name="colour" placeholder="Obsidian Black" required>
+            <small class="error-message"></small>
+          </label>
+          <label class="field">
+            <span>Model</span>
+            <input type="text" name="model" placeholder="BMW 530i" required>
+            <small class="error-message"></small>
+          </label>
+          <label class="field">
+            <span>Year</span>
+            <input type="number" name="year" placeholder="2022" min="1990" max="2035" required>
+            <small class="error-message"></small>
+          </label>
+          <label class="field">
+            <span>Location</span>
+            <input type="text" name="location" placeholder="Shanghai" required>
+            <small class="error-message"></small>
+          </label>
+          <label class="field">
+            <span>Price</span>
+            <input type="number" name="price" placeholder="258000" min="1" required>
+            <small class="error-message"></small>
+          </label>
+          <label class="field">
+            <span>Image of car</span>
+            <input type="url" name="image" placeholder="https://example.com/car.jpg">
+            <small class="hint">Optional. Leave blank to use a generated premium placeholder image.</small>
+            <small class="error-message"></small>
+          </label>
+        </div>
+        <button class="button button-primary" type="submit">Publish listing</button>
+        <p class="form-status" id="addCarStatus" aria-live="polite"></p>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-shell">
+      <p>Veluxe Motors (c) 2026</p>
+      <div class="footer-links">
+        <a href="register.html">Register</a>
+        <a href="login.html">Login</a>
+        <a href="add-car.html">Add Car</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

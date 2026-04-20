@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seller Registration | Veluxe Motors Seller Module</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="register">
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="register.html">
+        <span class="brand-mark">V</span>
+        <span class="brand-copy">
+          <strong>Veluxe Motors</strong>
+          <small>Seller Module</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="register.html" class="is-active">Register</a>
+        <a href="login.html">Login</a>
+        <a href="add-car.html">Add Car</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container narrow">
+      <section class="seller-hero seller-hero-register reveal">
+        <div class="seller-hero-copy">
+          <p class="eyebrow">Seller onboarding</p>
+          <h2>Join a polished car selling platform.</h2>
+          <p>Verified seller accounts help buyers trust the vehicles you publish and keep the listing workflow structured.</p>
+          <div class="seller-tags">
+            <span>Verified profile</span>
+            <span>Fast listing access</span>
+            <span>Premium presentation</span>
+          </div>
+        </div>
+        <div class="car-showcase" aria-hidden="true">
+          <div class="speed-line speed-line-one"></div>
+          <div class="speed-line speed-line-two"></div>
+          <div class="car-glow"></div>
+          <div class="car-body">
+            <div class="car-window car-window-left"></div>
+            <div class="car-window car-window-right"></div>
+            <div class="car-light"></div>
+          </div>
+          <div class="wheel wheel-left"></div>
+          <div class="wheel wheel-right"></div>
+        </div>
+      </section>
+
+      <div class="section-heading left">
+        <p class="eyebrow">Seller module</p>
+        <h1>Register as a vehicle seller</h1>
+        <p>Complete the seller registration form using the validation rules required in the project document.</p>
+      </div>
+
+      <form class="panel form-panel reveal reveal-delay-1" id="registrationForm" novalidate>
+        <div class="form-grid">
+          <label class="field">
+            <span>Name</span>
+            <input type="text" name="name" placeholder="Wei Zhang" required>
+            <small class="error-message"></small>
+          </label>
+          <label class="field">
+            <span>Address</span>
+            <input type="text" name="address" placeholder="88 Pudong Avenue 1" required>
+            <small class="error-message"></small>
+          </label>
+          <label class="field">
+            <span>Phone number</span>
+            <input type="tel" name="phone" placeholder="13800138000" required>
+            <small class="error-message"></small>
+          </label>
+          <label class="field">
+            <span>Email address</span>
+            <input type="email" name="email" placeholder="seller@example.com" required>
+            <small class="error-message"></small>
+          </label>
+          <label class="field">
+            <span>Username</span>
+            <input type="text" name="username" placeholder="seller01" required>
+            <small class="error-message"></small>
+          </label>
+          <label class="field">
+            <span>Password</span>
+            <input type="password" name="password" placeholder="At least 6 letters or numbers" required>
+            <small class="error-message"></small>
+          </label>
+        </div>
+        <button class="button button-primary" type="submit">Create seller account</button>
+        <p class="form-status" id="registrationStatus" aria-live="polite"></p>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-shell">
+      <p>Veluxe Motors (c) 2026</p>
+      <div class="footer-links">
+        <a href="register.html">Register</a>
+        <a href="login.html">Login</a>
+        <a href="add-car.html">Add Car</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
