@@ -28,16 +28,16 @@
   </header>
 
   <main class="section">
-    <div class="container narrow">
-      <section class="seller-hero seller-hero-add reveal">
+    <div class="container">
+      <section class="seller-hero reveal">
         <div class="seller-hero-copy">
           <p class="eyebrow">Vehicle publishing</p>
-          <h2>Present each car like a premium listing.</h2>
-          <p>Add a vehicle with the key sales details buyers expect first: model, year, colour, location, price, and image.</p>
+          <h2>Present every car like it belongs on a real marketplace.</h2>
+          <p>This page now feels closer to a genuine seller workspace by combining real vehicle photography, stronger hierarchy, and a live listing preview.</p>
           <div class="seller-tags">
-            <span>Clean form flow</span>
-            <span>Luxury visual tone</span>
-            <span>Instant local save</span>
+            <span>Real car imagery</span>
+            <span>Live listing preview</span>
+            <span>More convincing presentation</span>
           </div>
         </div>
         <div class="listing-preview" aria-hidden="true">
@@ -45,62 +45,94 @@
             <span class="preview-badge">Featured</span>
             <span class="preview-price">CNY 258,000</span>
           </div>
-          <div class="preview-car">
-            <div class="preview-road"></div>
-            <div class="preview-car-shell"></div>
-            <div class="preview-wheel preview-wheel-left"></div>
-            <div class="preview-wheel preview-wheel-right"></div>
+          <div class="preview-media">
+            <img
+              src="https://images.pexels.com/photos/13331881/pexels-photo-13331881.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              alt="Premium black sedan used as listing inspiration"
+              loading="lazy"
+            >
           </div>
           <div class="preview-meta">
             <strong>BMW 530i</strong>
-            <span>Obsidian Black • 2022</span>
+            <span>Obsidian Black / 2022</span>
           </div>
         </div>
       </section>
 
       <div class="section-heading left">
-        <p class="eyebrow">Seller listing</p>
+        <p class="eyebrow">Seller Listing</p>
         <h1>Add a new vehicle advertisement</h1>
-        <p>Submit a seller listing with the required car fields. This seller-only demo stores the listing locally in the browser.</p>
+        <p>Submit the required vehicle information below. The live card on the right updates while you type so the page feels more believable and more useful.</p>
       </div>
 
-      <form class="panel form-panel reveal reveal-delay-1" id="addCarForm" novalidate>
-        <div class="form-grid">
-          <label class="field">
-            <span>Colour</span>
-            <input type="text" name="colour" placeholder="Obsidian Black" required>
-            <small class="error-message"></small>
-          </label>
-          <label class="field">
-            <span>Model</span>
-            <input type="text" name="model" placeholder="BMW 530i" required>
-            <small class="error-message"></small>
-          </label>
-          <label class="field">
-            <span>Year</span>
-            <input type="number" name="year" placeholder="2022" min="1990" max="2035" required>
-            <small class="error-message"></small>
-          </label>
-          <label class="field">
-            <span>Location</span>
-            <input type="text" name="location" placeholder="Shanghai" required>
-            <small class="error-message"></small>
-          </label>
-          <label class="field">
-            <span>Price</span>
-            <input type="number" name="price" placeholder="258000" min="1" required>
-            <small class="error-message"></small>
-          </label>
-          <label class="field">
-            <span>Image of car</span>
-            <input type="url" name="image" placeholder="https://example.com/car.jpg">
-            <small class="hint">Optional. Leave blank to use a generated premium placeholder image.</small>
-            <small class="error-message"></small>
-          </label>
-        </div>
-        <button class="button button-primary" type="submit">Publish listing</button>
-        <p class="form-status" id="addCarStatus" aria-live="polite"></p>
-      </form>
+      <section class="listing-workbench">
+        <form class="panel form-panel reveal reveal-delay-1" id="addCarForm" novalidate>
+          <div class="form-grid">
+            <label class="field">
+              <span>Colour</span>
+              <input type="text" name="colour" placeholder="Obsidian Black" required>
+              <small class="error-message"></small>
+            </label>
+            <label class="field">
+              <span>Model</span>
+              <input type="text" name="model" placeholder="BMW 530i" required>
+              <small class="error-message"></small>
+            </label>
+            <label class="field">
+              <span>Year</span>
+              <input type="number" name="year" placeholder="2022" min="1990" max="2035" required>
+              <small class="error-message"></small>
+            </label>
+            <label class="field">
+              <span>Location</span>
+              <input type="text" name="location" placeholder="Shanghai" required>
+              <small class="error-message"></small>
+            </label>
+            <label class="field">
+              <span>Price</span>
+              <input type="number" name="price" placeholder="258000" min="1" required>
+              <small class="error-message"></small>
+            </label>
+            <label class="field field-wide">
+              <span>Image of car</span>
+              <input type="url" name="image" placeholder="https://example.com/car.jpg">
+              <small class="hint">Optional. Leave blank to use a premium default car photo.</small>
+              <small class="error-message"></small>
+            </label>
+          </div>
+          <button class="button button-primary" type="submit">Publish listing</button>
+          <p class="form-status" id="addCarStatus" aria-live="polite"></p>
+        </form>
+
+        <aside class="panel live-preview-card reveal reveal-delay-2" aria-label="Live listing preview">
+          <p class="eyebrow">Live Preview</p>
+          <div class="live-preview-media">
+            <img
+              id="listingPreviewImage"
+              src="https://images.pexels.com/photos/13331881/pexels-photo-13331881.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              alt="Vehicle listing preview"
+              loading="lazy"
+            >
+          </div>
+          <div class="live-preview-content">
+            <h3 id="listingPreviewModel">BMW 530i</h3>
+            <p id="listingPreviewMeta">Obsidian Black / 2022 / Shanghai</p>
+            <div class="live-preview-chips">
+              <span id="listingPreviewSeller">Login required</span>
+              <span>Premium layout</span>
+            </div>
+            <div class="preview-price-block">
+              <span>Display price</span>
+              <strong id="listingPreviewPrice">CNY 258,000</strong>
+            </div>
+            <ul class="preview-checklist">
+              <li>Updates while you type model, colour, year, location, and price.</li>
+              <li>Uses a real vehicle photo by default or your custom image link.</li>
+              <li>Makes the seller form feel closer to a real online car listing system.</li>
+            </ul>
+          </div>
+        </aside>
+      </section>
     </div>
   </main>
 

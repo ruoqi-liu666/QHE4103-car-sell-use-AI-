@@ -4,6 +4,8 @@ const STORAGE_KEYS = {
   activeUser: "veluxe-active-user"
 };
 
+const DEFAULT_LISTING_IMAGE = "https://images.pexels.com/photos/13331881/pexels-photo-13331881.jpeg?auto=compress&cs=tinysrgb&w=1200";
+
 const seededUsers = [
   { username: "seller01", password: "seller01", name: "Demo Seller" }
 ];
@@ -137,6 +139,7 @@ function setupLoginForm() {
 function setupAddCarForm() {
   const form = document.getElementById("addCarForm");
   const status = document.getElementById("addCarStatus");
+  const syncPreview = setupAddCarPreview(form);
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -144,6 +147,7 @@ function setupAddCarForm() {
 
     const activeUser = localStorage.getItem(STORAGE_KEYS.activeUser);
     if (!activeUser) {
+      syncPreview();
       setStatus(status, "Please log in before publishing a car listing.", false);
       return;
     }
@@ -185,26 +189,59 @@ function setupAddCarForm() {
     }
 
     const cars = readStorage(STORAGE_KEYS.cars);
-    const id = `car-${Date.now()}`;
-    const model = values.model.trim();
-    const colour = values.colour.trim();
-
     cars.unshift({
-      id,
-      model,
+      id: `car-${Date.now()}`,
+      model: values.model.trim(),
       year: Number(values.year),
-      colour,
+      colour: values.colour.trim(),
       location: values.location.trim(),
       price: Number(values.price),
-      image: values.image.trim() || buildCarSvg(model, colour),
+      image: values.image.trim() || DEFAULT_LISTING_IMAGE,
       seller: activeUser
     });
 
     localStorage.setItem(STORAGE_KEYS.cars, JSON.stringify(cars));
     form.reset();
     clearErrors(form);
+    syncPreview();
     setStatus(status, "Vehicle published successfully for the logged-in seller.", true);
   });
+}
+
+function setupAddCarPreview(form) {
+  const previewImage = document.getElementById("listingPreviewImage");
+  const previewModel = document.getElementById("listingPreviewModel");
+  const previewMeta = document.getElementById("listingPreviewMeta");
+  const previewPrice = document.getElementById("listingPreviewPrice");
+  const previewSeller = document.getElementById("listingPreviewSeller");
+
+  const sync = () => {
+    const model = form.elements.model.value.trim() || "BMW 530i";
+    const colour = form.elements.colour.value.trim() || "Obsidian Black";
+    const year = form.elements.year.value.trim() || "2022";
+    const location = form.elements.location.value.trim() || "Shanghai";
+    const price = form.elements.price.value.trim() || "258000";
+    const image = form.elements.image.value.trim();
+    const activeUser = localStorage.getItem(STORAGE_KEYS.activeUser);
+    const fallbackImage = buildCarSvg(model, colour);
+    const nextImage = /^https?:\/\/.+/i.test(image) ? image : DEFAULT_LISTING_IMAGE;
+
+    previewModel.textContent = model;
+    previewMeta.textContent = `${colour} / ${year} / ${location}`;
+    previewPrice.textContent = `CNY ${formatCurrency(price)}`;
+    previewSeller.textContent = activeUser ? `Seller ${activeUser}` : "Login required";
+
+    previewImage.onerror = () => {
+      previewImage.onerror = null;
+      previewImage.src = fallbackImage;
+    };
+    previewImage.src = nextImage;
+  };
+
+  form.addEventListener("input", sync);
+  form.addEventListener("change", sync);
+  sync();
+  return sync;
 }
 
 function applyValidation(form, rules) {
@@ -254,6 +291,10 @@ function readStorage(key) {
   } catch (error) {
     return [];
   }
+}
+
+function formatCurrency(value) {
+  return new Intl.NumberFormat("en-US").format(Number(value) || 0);
 }
 
 function buildCarSvg(model, colour) {
