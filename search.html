@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Cars - Online Car Sale</title>
+    <link rel="stylesheet" href="search.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">Online Car Sale</div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="search.html">Search</a>
+            <a href="add-car.html">Sell</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+        </div>
+    </nav>
+
+    <main class="search-container">
+        <h1 class="page-title">Find Your Perfect Car</h1>
+
+        <form class="search-form" id="searchForm">
+            <div class="input-group">
+                <label for="modelInput">Model</label>
+                <input type="text" id="modelInput" name="model" placeholder="e.g. Sedan, SUV">
+            </div>
+            <div class="input-group">
+                <label for="yearInput">Year</label>
+                <input type="number" id="yearInput" name="year" placeholder="e.g. 2023">
+            </div>
+            <button type="submit" class="btn-primary">Search</button>
+        </form>
+
+        <section class="results-section">
+            <h2 class="section-title">Available Vehicles</h2>
+            <div class="results-grid" id="resultsContainer">
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Online Car Sale. All rights reserved.</p>
+    </footer>
+
+    <script src="search.js"></script>
+</body>
+</html>
