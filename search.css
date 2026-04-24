@@ -257,7 +257,7 @@ body::before {
 
 .search-filters {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 18px;
     margin: 28px 0 22px;
 }
@@ -271,6 +271,7 @@ body::before {
     font-weight: 500;
 }
 
+.filter-input,
 .filter-select {
     width: 100%;
     padding: 16px 18px;
@@ -284,6 +285,15 @@ body::before {
     cursor: pointer;
 }
 
+.filter-input {
+    cursor: text;
+}
+
+.filter-input::placeholder {
+    color: #9a9389;
+}
+
+.filter-input:focus,
 .filter-select:focus {
     border-color: rgba(184, 149, 95, 0.9);
     box-shadow: 0 0 0 5px rgba(184, 149, 95, 0.12);
