@@ -1,83 +1,47 @@
-const mockCarData = [
-    { id: 101, model: "Luxury Sedan", year: "2023", price: "$65,000", color: "Black" },
-    { id: 102, model: "Sport SUV", year: "2022", price: "$85,000", color: "White" },
-    { id: 103, model: "Executive Sedan", year: "2024", price: "$92,000", color: "Silver" },
-    { id: 104, model: "Compact SUV", year: "2023", price: "$45,000", color: "Grey" }
-];
+document.addEventListener("DOMContentLoaded", function () {
+    const searchBtn = document.getElementById("searchBtn");
+    const carItems = document.querySelectorAll(".car-item");
+    const resultsCount = document.getElementById("resultsCount");
+    const emptyState = document.getElementById("emptyState");
+    const brandSelect = document.getElementById("brandSelect");
+    const priceSelect = document.getElementById("priceSelect");
+    const fuelSelect = document.getElementById("fuelSelect");
 
-document.addEventListener("DOMContentLoaded", function()
-{
-    const searchForm = document.getElementById("searchForm");
-    
-    searchForm.addEventListener("submit", function(event)
-    {
-        event.preventDefault();
-        executeSearch();
-    });
+    function updateSearchResults() {
+        const selectedBrand = brandSelect.value;
+        const selectedPrice = priceSelect.value;
+        const selectedFuel = fuelSelect.value;
+        let visibleCount = 0;
 
-    renderResults(mockCarData);
-});
+        carItems.forEach(function (item) {
+            const carBrand = item.getAttribute("data-brand");
+            const carPrice = item.getAttribute("data-price");
+            const carFuel = item.getAttribute("data-fuel");
 
-function executeSearch()
-{
-    const modelQuery = document.getElementById("modelInput").value.trim().toLowerCase();
-    const yearQuery = document.getElementById("yearInput").value.trim();
+            const brandMatch = selectedBrand === "all" || selectedBrand === carBrand;
+            const priceMatch = selectedPrice === "all" || selectedPrice === carPrice;
+            const fuelMatch = selectedFuel === "all" || selectedFuel === carFuel;
 
-    const filteredCars = mockCarData.filter(function(car)
-    {
-        const matchesModel = modelQuery === "" || car.model.toLowerCase().includes(modelQuery);
-        const matchesYear = yearQuery === "" || car.year === yearQuery;
-        
-        return matchesModel && matchesYear;
-    });
+            if (brandMatch && priceMatch && fuelMatch) {
+                item.style.display = "flex";
+                visibleCount += 1;
+            } else {
+                item.style.display = "none";
+            }
+        });
 
-    renderResults(filteredCars);
-}
+        resultsCount.textContent = visibleCount === 1
+            ? "1 vehicle available"
+            : visibleCount + " vehicles available";
 
-function renderResults(cars)
-{
-    const resultsContainer = document.getElementById("resultsContainer");
-    resultsContainer.innerHTML = "";
-
-    if (cars.length === 0)
-    {
-        resultsContainer.innerHTML = "<p>No vehicles match your search criteria.</p>";
-        return;
+        emptyState.hidden = visibleCount !== 0;
     }
 
-    cars.forEach(function(car)
-    {
-        const card = document.createElement("div");
-        card.className = "car-card";
-        card.onclick = function()
-        {
-            window.location.href = "car-detail.html?id=" + car.id;
-        };
+    searchBtn.addEventListener("click", updateSearchResults);
 
-        const imageContainer = document.createElement("div");
-        imageContainer.className = "car-image-container";
-
-        const infoContainer = document.createElement("div");
-        infoContainer.className = "car-info";
-
-        const title = document.createElement("h3");
-        title.textContent = car.model;
-
-        const details = document.createElement("div");
-        details.className = "car-details";
-        details.textContent = car.year + " | " + car.color;
-
-        const price = document.createElement("div");
-        price.className = "car-price";
-        price.textContent = car.price;
-
-        infoContainer.appendChild(title);
-        infoContainer.appendChild(details);
-        infoContainer.appendChild(price);
-
-        card.appendChild(imageContainer);
-        card.appendChild(infoContainer);
-
-        resultsContainer.appendChild(card);
+    [brandSelect, priceSelect, fuelSelect].forEach(function (select) {
+        select.addEventListener("change", updateSearchResults);
     });
-}
+
+    updateSearchResults();
+});
