@@ -7,6 +7,24 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    (function () {
+      var key = "veluxe-page-transition";
+      try {
+        var raw = sessionStorage.getItem(key);
+        if (!raw) return;
+        var transition = JSON.parse(raw);
+        var current = location.pathname.split("/").pop().replace(".html", "");
+        if (!transition || transition.to !== current || Date.now() - transition.timestamp > 1800) {
+          sessionStorage.removeItem(key);
+          return;
+        }
+        document.documentElement.dataset.pageTransition = transition.direction === "backward" ? "backward" : "forward";
+      } catch (error) {
+        sessionStorage.removeItem(key);
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body data-page="login">
@@ -33,7 +51,7 @@
         <div class="seller-hero-copy">
           <p class="eyebrow">Seller access</p>
           <h2>Return to a workspace that feels like a real vehicle platform.</h2>
-          <p>The login page now feels more trustworthy through premium automotive imagery, clearer hierarchy, and a more platform-like seller control area.</p>
+          <p>The login page feels more trustworthy through premium automotive imagery, clearer hierarchy, and a stronger sense of a seller dashboard entrance.</p>
           <div class="seller-tags">
             <span>Secure access</span>
             <span>Professional seller flow</span>
@@ -66,32 +84,100 @@
         </div>
       </section>
 
-      <div class="section-heading left">
+      <div class="section-heading reveal reveal-delay-1">
         <p class="eyebrow">Seller Access</p>
         <h1>Login to manage your listings</h1>
-        <p>Use the seller account created on the registration page to access the seller-side workflow.</p>
+        <p>Use the seller account created on the registration page to activate the seller session and continue into the listing workflow.</p>
       </div>
 
-      <div class="panel login-note reveal reveal-delay-1">
-        <p><strong>Demo account:</strong> username <code>seller01</code> / password <code>seller01</code></p>
-      </div>
+      <section class="insight-strip reveal reveal-delay-1" aria-label="Seller workspace snapshot">
+        <article class="stat-card">
+          <span>Seller profiles</span>
+          <strong data-stat="users">01</strong>
+          <p>Accounts available for login inside the demo module.</p>
+        </article>
+        <article class="stat-card">
+          <span>Live inventory</span>
+          <strong data-stat="cars">00</strong>
+          <p>Vehicle cards currently saved across sellers.</p>
+        </article>
+        <article class="stat-card">
+          <span>Latest model</span>
+          <strong data-stat="latestModel">No listings yet</strong>
+          <p>The newest published vehicle appears here automatically.</p>
+        </article>
+      </section>
 
-      <form class="panel form-panel reveal reveal-delay-2" id="loginForm" novalidate>
-        <div class="form-grid single">
-          <label class="field">
-            <span>Username</span>
-            <input type="text" name="username" placeholder="seller01" required>
-            <small class="error-message"></small>
-          </label>
-          <label class="field">
-            <span>Password</span>
-            <input type="password" name="password" placeholder="seller01" required>
-            <small class="error-message"></small>
-          </label>
+      <section class="workspace-grid">
+        <div class="workspace-stack">
+          <div class="panel login-note reveal reveal-delay-2">
+            <p><strong>Demo account:</strong> username <code>seller01</code> / password <code>seller01</code></p>
+          </div>
+
+          <form class="panel form-panel reveal reveal-delay-2" id="loginForm" novalidate>
+            <div class="form-grid single">
+              <label class="field">
+                <span>Username</span>
+                <input type="text" name="username" placeholder="seller01" required>
+                <small class="error-message"></small>
+              </label>
+              <label class="field">
+                <span>Password</span>
+                <input type="password" name="password" placeholder="seller01" required>
+                <small class="error-message"></small>
+              </label>
+            </div>
+            <button class="button button-primary" type="submit">Login</button>
+            <p class="form-status" id="loginStatus" aria-live="polite"></p>
+          </form>
         </div>
-        <button class="button button-primary" type="submit">Login</button>
-        <p class="form-status" id="loginStatus" aria-live="polite"></p>
-      </form>
+
+        <aside class="panel side-panel reveal reveal-delay-3" aria-label="Workspace status panel">
+          <p class="eyebrow">Workspace Status</p>
+          <div class="status-pills">
+            <span class="status-pill">Inventory sync</span>
+            <span class="status-pill">Session ready</span>
+            <span class="status-pill">Seller verified</span>
+          </div>
+          <div class="activity-feed">
+            <div class="activity-row">
+              <span>Current session</span>
+              <strong data-stat="activeSellerShort">Guest</strong>
+            </div>
+            <div class="activity-row">
+              <span>Inventory state</span>
+              <strong data-stat="carsLabel">0 live listings</strong>
+            </div>
+            <div class="activity-row">
+              <span>Latest vehicle details</span>
+              <strong data-stat="latestMeta">Publish a vehicle to populate this panel.</strong>
+            </div>
+          </div>
+          <ul class="feature-list">
+            <li>Login connects the seller identity to the Add Car page, so the published listing shows a believable owner.</li>
+            <li>Dashboard-style support content makes the page feel like a real seller workspace rather than a blank access form.</li>
+            <li>Once signed in, the preview on the Add Car page updates with the active seller automatically.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="mini-grid reveal reveal-delay-3" aria-label="Seller workflow highlights">
+        <article class="trust-card">
+          <span class="trust-number">01</span>
+          <h3>Fast handoff into listing</h3>
+          <p>Use the new seller session immediately on the Add Car page without re-entering profile information.</p>
+        </article>
+        <article class="trust-card">
+          <span class="trust-number">02</span>
+          <h3>Premium visual continuity</h3>
+          <p>The same lighting, spacing, and motion style now carries across registration, login, and publishing.</p>
+        </article>
+        <article class="trust-card">
+          <span class="trust-number">03</span>
+          <h3>Stronger marketplace illusion</h3>
+          <p>Session details, seller counts, and inventory snapshots make the module feel much more complete.</p>
+        </article>
+      </section>
     </div>
   </main>
 

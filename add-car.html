@@ -7,6 +7,24 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    (function () {
+      var key = "veluxe-page-transition";
+      try {
+        var raw = sessionStorage.getItem(key);
+        if (!raw) return;
+        var transition = JSON.parse(raw);
+        var current = location.pathname.split("/").pop().replace(".html", "");
+        if (!transition || transition.to !== current || Date.now() - transition.timestamp > 1800) {
+          sessionStorage.removeItem(key);
+          return;
+        }
+        document.documentElement.dataset.pageTransition = transition.direction === "backward" ? "backward" : "forward";
+      } catch (error) {
+        sessionStorage.removeItem(key);
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body data-page="add-car">
@@ -33,11 +51,11 @@
         <div class="seller-hero-copy">
           <p class="eyebrow">Vehicle publishing</p>
           <h2>Present every car like it belongs on a real marketplace.</h2>
-          <p>This page now feels closer to a genuine seller workspace by combining real vehicle photography, stronger hierarchy, and a live listing preview.</p>
+          <p>This page feels closer to a genuine seller workspace by combining real vehicle photography, stronger hierarchy, live preview updates, and a dynamic recent inventory area.</p>
           <div class="seller-tags">
             <span>Real car imagery</span>
             <span>Live listing preview</span>
-            <span>More convincing presentation</span>
+            <span>Dynamic seller inventory</span>
           </div>
         </div>
         <div class="listing-preview" aria-hidden="true">
@@ -59,14 +77,32 @@
         </div>
       </section>
 
-      <div class="section-heading left">
+      <div class="section-heading reveal reveal-delay-1">
         <p class="eyebrow">Seller Listing</p>
         <h1>Add a new vehicle advertisement</h1>
-        <p>Submit the required vehicle information below. The live card on the right updates while you type so the page feels more believable and more useful.</p>
+        <p>Submit the required vehicle information below. The live card updates while you type, and the inventory panel below keeps the latest saved vehicles visible.</p>
       </div>
 
+      <section class="insight-strip reveal reveal-delay-1" aria-label="Seller workspace snapshot">
+        <article class="stat-card">
+          <span>Live inventory</span>
+          <strong data-stat="cars">00</strong>
+          <p>Listings currently stored in the seller module.</p>
+        </article>
+        <article class="stat-card">
+          <span>Average price</span>
+          <strong data-stat="averagePrice">CNY 0</strong>
+          <p>A rolling price snapshot based on saved vehicles.</p>
+        </article>
+        <article class="stat-card">
+          <span>Seller session</span>
+          <strong data-stat="activeSellerShort">Guest</strong>
+          <p>Login is required before publishing a live listing.</p>
+        </article>
+      </section>
+
       <section class="listing-workbench">
-        <form class="panel form-panel reveal reveal-delay-1" id="addCarForm" novalidate>
+        <form class="panel form-panel reveal reveal-delay-2" id="addCarForm" novalidate>
           <div class="form-grid">
             <label class="field">
               <span>Colour</span>
@@ -104,7 +140,7 @@
           <p class="form-status" id="addCarStatus" aria-live="polite"></p>
         </form>
 
-        <aside class="panel live-preview-card reveal reveal-delay-2" aria-label="Live listing preview">
+        <aside class="panel live-preview-card reveal reveal-delay-3" aria-label="Live listing preview">
           <p class="eyebrow">Live Preview</p>
           <div class="live-preview-media">
             <img
@@ -128,10 +164,52 @@
             <ul class="preview-checklist">
               <li>Updates while you type model, colour, year, location, and price.</li>
               <li>Uses a real vehicle photo by default or your custom image link.</li>
-              <li>Makes the seller form feel closer to a real online car listing system.</li>
+              <li>Reflects the active seller session when the login page has been completed.</li>
             </ul>
           </div>
         </aside>
+      </section>
+
+      <section class="inventory-grid">
+        <article class="panel guidance-panel reveal reveal-delay-2">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Listing Quality</p>
+              <h3>What makes a vehicle card feel premium</h3>
+            </div>
+            <span class="status-pill">Detailed post</span>
+          </div>
+          <ul class="feature-list">
+            <li>Use a clear model name and colour so the card feels realistic at first glance.</li>
+            <li>Keep year, price, and location consistent with the market segment you want to present.</li>
+            <li>If you add a custom image URL, choose a sharp dealership or exterior shot for stronger impact.</li>
+          </ul>
+          <div class="signal-list">
+            <div class="signal-row">
+              <span>Latest model</span>
+              <strong data-stat="latestModel">No listings yet</strong>
+            </div>
+            <div class="signal-row">
+              <span>Latest details</span>
+              <strong data-stat="latestMeta">Publish a vehicle to populate this panel.</strong>
+            </div>
+            <div class="signal-row">
+              <span>Inventory state</span>
+              <strong data-stat="carsLabel">0 live listings</strong>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel recent-panel reveal reveal-delay-3">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Recently Published</p>
+              <h3>Seller inventory snapshots</h3>
+            </div>
+            <span class="status-pill" data-stat="carsLabel">0 live listings</span>
+          </div>
+          <div class="recent-listings" id="recentListings"></div>
+        </article>
       </section>
     </div>
   </main>

@@ -4,6 +4,10 @@ const STORAGE_KEYS = {
   activeUser: "veluxe-active-user"
 };
 
+const PAGE_SEQUENCE = ["register", "login", "add-car"];
+const PAGE_TRANSITION_KEY = "veluxe-page-transition";
+const PAGE_TRANSITION_TTL = 1800;
+const PAGE_EXIT_DELAY = 320;
 const DEFAULT_LISTING_IMAGE = "https://images.pexels.com/photos/13331881/pexels-photo-13331881.jpeg?auto=compress&cs=tinysrgb&w=1200";
 
 const seededUsers = [
@@ -12,6 +16,9 @@ const seededUsers = [
 
 document.addEventListener("DOMContentLoaded", () => {
   initialiseStorage();
+  setupPageTransitions();
+  setupRevealAnimations();
+  hydrateSharedPanels();
 
   const page = document.body.dataset.page;
   if (page === "register") setupRegistrationForm();
@@ -23,6 +30,7 @@ function initialiseStorage() {
   if (!localStorage.getItem(STORAGE_KEYS.users)) {
     localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(seededUsers));
   }
+
   if (!localStorage.getItem(STORAGE_KEYS.cars)) {
     localStorage.setItem(STORAGE_KEYS.cars, JSON.stringify([]));
   }
@@ -31,6 +39,7 @@ function initialiseStorage() {
 function setupRegistrationForm() {
   const form = document.getElementById("registrationForm");
   const status = document.getElementById("registrationStatus");
+  if (!form || !status) return;
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -88,9 +97,11 @@ function setupRegistrationForm() {
       username: values.username.trim(),
       password: values.password.trim()
     });
+
     localStorage.setItem(STORAGE_KEYS.users, JSON.stringify(users));
     form.reset();
     clearErrors(form);
+    hydrateSharedPanels();
     setStatus(status, "Seller registration successful. You can now log in with your new account.", true);
   });
 }
@@ -98,6 +109,7 @@ function setupRegistrationForm() {
 function setupLoginForm() {
   const form = document.getElementById("loginForm");
   const status = document.getElementById("loginStatus");
+  if (!form || !status) return;
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -132,6 +144,7 @@ function setupLoginForm() {
 
     localStorage.setItem(STORAGE_KEYS.activeUser, matchedUser.username);
     clearErrors(form);
+    hydrateSharedPanels();
     setStatus(status, `Login successful. Welcome back, ${matchedUser.username}.`, true);
   });
 }
@@ -139,6 +152,8 @@ function setupLoginForm() {
 function setupAddCarForm() {
   const form = document.getElementById("addCarForm");
   const status = document.getElementById("addCarStatus");
+  if (!form || !status) return;
+
   const syncPreview = setupAddCarPreview(form);
 
   form.addEventListener("submit", (event) => {
@@ -148,6 +163,7 @@ function setupAddCarForm() {
     const activeUser = localStorage.getItem(STORAGE_KEYS.activeUser);
     if (!activeUser) {
       syncPreview();
+      hydrateSharedPanels();
       setStatus(status, "Please log in before publishing a car listing.", false);
       return;
     }
@@ -203,6 +219,7 @@ function setupAddCarForm() {
     localStorage.setItem(STORAGE_KEYS.cars, JSON.stringify(cars));
     form.reset();
     clearErrors(form);
+    hydrateSharedPanels();
     syncPreview();
     setStatus(status, "Vehicle published successfully for the logged-in seller.", true);
   });
@@ -214,6 +231,11 @@ function setupAddCarPreview(form) {
   const previewMeta = document.getElementById("listingPreviewMeta");
   const previewPrice = document.getElementById("listingPreviewPrice");
   const previewSeller = document.getElementById("listingPreviewSeller");
+  if (!previewImage || !previewModel || !previewMeta || !previewPrice || !previewSeller) {
+    return () => {};
+  }
+
+  previewImage.dataset.source = previewImage.getAttribute("src") || DEFAULT_LISTING_IMAGE;
 
   const sync = () => {
     const model = form.elements.model.value.trim() || "BMW 530i";
@@ -226,22 +248,225 @@ function setupAddCarPreview(form) {
     const fallbackImage = buildCarSvg(model, colour);
     const nextImage = /^https?:\/\/.+/i.test(image) ? image : DEFAULT_LISTING_IMAGE;
 
-    previewModel.textContent = model;
-    previewMeta.textContent = `${colour} / ${year} / ${location}`;
-    previewPrice.textContent = `CNY ${formatCurrency(price)}`;
-    previewSeller.textContent = activeUser ? `Seller ${activeUser}` : "Login required";
-
-    previewImage.onerror = () => {
-      previewImage.onerror = null;
-      previewImage.src = fallbackImage;
-    };
-    previewImage.src = nextImage;
+    updatePreviewText(previewModel, model);
+    updatePreviewText(previewMeta, `${colour} / ${year} / ${location}`);
+    updatePreviewText(previewPrice, `CNY ${formatCurrency(price)}`);
+    updatePreviewText(previewSeller, activeUser ? `Seller ${activeUser}` : "Login required");
+    updatePreviewImage(previewImage, nextImage, fallbackImage);
   };
 
   form.addEventListener("input", sync);
   form.addEventListener("change", sync);
   sync();
   return sync;
+}
+
+function hydrateSharedPanels() {
+  const snapshot = buildDashboardSnapshot();
+
+  document.querySelectorAll("[data-stat]").forEach((node) => {
+    const key = node.dataset.stat;
+    if (!Object.prototype.hasOwnProperty.call(snapshot, key)) return;
+    node.textContent = snapshot[key];
+  });
+
+  renderRecentListings(snapshot.carsRaw);
+}
+
+function buildDashboardSnapshot() {
+  const users = readStorage(STORAGE_KEYS.users);
+  const cars = readStorage(STORAGE_KEYS.cars);
+  const activeUser = localStorage.getItem(STORAGE_KEYS.activeUser);
+  const latestCar = cars[0] || null;
+  const totalValue = cars.reduce((sum, car) => sum + (Number(car.price) || 0), 0);
+  const averagePrice = cars.length ? Math.round(totalValue / cars.length) : 0;
+
+  return {
+    users: padMetric(users.length),
+    cars: padMetric(cars.length),
+    activeSellerShort: activeUser || "Guest",
+    activeSeller: activeUser ? `Seller ${activeUser}` : "Login required",
+    averagePrice: `CNY ${formatCurrency(averagePrice)}`,
+    latestModel: latestCar ? latestCar.model : "No listings yet",
+    latestMeta: latestCar ? `${latestCar.colour} / ${latestCar.year} / ${latestCar.location}` : "Publish a vehicle to populate this panel.",
+    carsLabel: `${cars.length} live listing${cars.length === 1 ? "" : "s"}`,
+    usersLabel: `${users.length} seller profile${users.length === 1 ? "" : "s"}`,
+    carsRaw: cars
+  };
+}
+
+function renderRecentListings(cars) {
+  const container = document.getElementById("recentListings");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  if (!cars.length) {
+    const emptyState = document.createElement("div");
+    emptyState.className = "empty-state";
+    emptyState.innerHTML = `
+      <strong>No vehicle has been published yet.</strong>
+      <p>Complete the form above after logging in and your newest listing card will appear here.</p>
+    `;
+    container.appendChild(emptyState);
+    return;
+  }
+
+  cars.slice(0, 4).forEach((car) => {
+    const item = document.createElement("article");
+    item.className = "listing-row";
+
+    const imageSrc = /^https?:\/\/.+/i.test(car.image) ? car.image : DEFAULT_LISTING_IMAGE;
+    const fallbackImage = buildCarSvg(car.model, car.colour);
+    item.innerHTML = `
+      <div class="listing-row-media">
+        <img src="${escapeHtml(imageSrc)}" alt="${escapeHtml(car.model)} preview" loading="lazy">
+      </div>
+      <div class="listing-row-copy">
+        <strong>${escapeHtml(car.model)}</strong>
+        <span>${escapeHtml(`${car.colour} / ${car.year} / ${car.location}`)}</span>
+        <div class="listing-row-meta">
+          <small>${escapeHtml(car.seller || "Unknown seller")}</small>
+          <small>CNY ${formatCurrency(car.price)}</small>
+        </div>
+      </div>
+    `;
+
+    const image = item.querySelector("img");
+    if (image) {
+      image.onerror = () => {
+        image.onerror = null;
+        image.src = fallbackImage;
+      };
+    }
+
+    container.appendChild(item);
+  });
+}
+
+function setupRevealAnimations() {
+  const items = Array.from(document.querySelectorAll(".reveal"));
+  if (!items.length) return;
+
+  if (prefersReducedMotion() || typeof IntersectionObserver !== "function") {
+    items.forEach((item) => item.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.16,
+      rootMargin: "0px 0px -10% 0px"
+    }
+  );
+
+  items.forEach((item) => observer.observe(item));
+}
+
+function setupPageTransitions() {
+  const currentPage = document.body.dataset.page;
+  if (!currentPage) return;
+
+  finalisePageTransition(currentPage);
+  if (prefersReducedMotion()) return;
+
+  document.querySelectorAll("a[href]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      if (!shouldAnimateNavigation(event, link, currentPage)) return;
+
+      const url = new URL(link.href, window.location.href);
+      const nextPage = getPageNameFromPath(url.pathname);
+      const direction = getNavigationDirection(currentPage, nextPage);
+      event.preventDefault();
+
+      writePageTransition({
+        from: currentPage,
+        to: nextPage,
+        direction,
+        timestamp: Date.now()
+      });
+
+      document.body.classList.add("is-page-leaving", direction === "forward" ? "is-leaving-forward" : "is-leaving-backward");
+      window.setTimeout(() => {
+        window.location.href = url.href;
+      }, PAGE_EXIT_DELAY);
+    });
+  });
+}
+
+function shouldAnimateNavigation(event, link, currentPage) {
+  if (event.defaultPrevented || event.button !== 0) return false;
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return false;
+  if (link.target && link.target !== "_self") return false;
+  if (link.hasAttribute("download")) return false;
+
+  const url = new URL(link.href, window.location.href);
+  if (url.origin !== window.location.origin) return false;
+
+  const nextPage = getPageNameFromPath(url.pathname);
+  return Boolean(nextPage && nextPage !== currentPage);
+}
+
+function getPageNameFromPath(value) {
+  const filename = String(value).split("/").pop().split("?")[0].split("#")[0];
+  return PAGE_SEQUENCE.find((page) => `${page}.html` === filename) || null;
+}
+
+function getNavigationDirection(fromPage, toPage) {
+  const fromIndex = PAGE_SEQUENCE.indexOf(fromPage);
+  const toIndex = PAGE_SEQUENCE.indexOf(toPage);
+
+  if (fromIndex === -1 || toIndex === -1 || fromIndex === toIndex) {
+    return "forward";
+  }
+
+  return toIndex > fromIndex ? "forward" : "backward";
+}
+
+function finalisePageTransition(currentPage) {
+  const transition = readPageTransition();
+  if (!transition || transition.to !== currentPage || Date.now() - transition.timestamp > PAGE_TRANSITION_TTL) {
+    clearPageTransition();
+    document.documentElement.removeAttribute("data-page-transition");
+    return;
+  }
+
+  window.setTimeout(() => {
+    document.documentElement.removeAttribute("data-page-transition");
+  }, 900);
+
+  clearPageTransition();
+}
+
+function readPageTransition() {
+  try {
+    return JSON.parse(sessionStorage.getItem(PAGE_TRANSITION_KEY));
+  } catch (error) {
+    return null;
+  }
+}
+
+function writePageTransition(transition) {
+  try {
+    sessionStorage.setItem(PAGE_TRANSITION_KEY, JSON.stringify(transition));
+  } catch (error) {
+    document.documentElement.removeAttribute("data-page-transition");
+  }
+}
+
+function clearPageTransition() {
+  try {
+    sessionStorage.removeItem(PAGE_TRANSITION_KEY);
+  } catch (error) {
+    document.documentElement.removeAttribute("data-page-transition");
+  }
 }
 
 function applyValidation(form, rules) {
@@ -293,8 +518,56 @@ function readStorage(key) {
   }
 }
 
+function prefersReducedMotion() {
+  return typeof window.matchMedia === "function" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function padMetric(value) {
+  return String(value).padStart(2, "0");
+}
+
 function formatCurrency(value) {
   return new Intl.NumberFormat("en-US").format(Number(value) || 0);
+}
+
+function updatePreviewText(node, value) {
+  if (!node || node.textContent === value) return;
+  node.textContent = value;
+  restartAnimation(node, "value-refresh");
+}
+
+function updatePreviewImage(node, src, fallbackSrc) {
+  if (!node) return;
+  if (node.dataset.source === src) {
+    node.classList.remove("is-loading");
+    return;
+  }
+
+  node.dataset.source = src;
+  node.classList.add("is-loading");
+
+  node.onload = () => {
+    node.classList.remove("is-loading");
+    restartAnimation(node, "image-refresh");
+  };
+
+  node.onerror = () => {
+    if (node.dataset.source !== fallbackSrc) {
+      node.dataset.source = fallbackSrc;
+      node.src = fallbackSrc;
+      return;
+    }
+
+    node.classList.remove("is-loading");
+  };
+
+  node.src = src;
+}
+
+function restartAnimation(node, className) {
+  node.classList.remove(className);
+  void node.offsetWidth;
+  node.classList.add(className);
 }
 
 function buildCarSvg(model, colour) {
