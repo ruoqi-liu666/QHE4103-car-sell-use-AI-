@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Car | Veluxe Motors Seller Module</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    (function () {
+      var key = "veluxe-page-transition";
+      try {
+        var raw = sessionStorage.getItem(key);
+        if (!raw) return;
+        var transition = JSON.parse(raw);
+        var current = location.pathname.split("/").pop().replace(".html", "");
+        if (!transition || transition.to !== current || Date.now() - transition.timestamp > 1800) {
+          sessionStorage.removeItem(key);
+          return;
+        }
+        document.documentElement.dataset.pageTransition = transition.direction === "backward" ? "backward" : "forward";
+      } catch (error) {
+        sessionStorage.removeItem(key);
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="add-car">
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="register.html">
+        <span class="brand-mark">V</span>
+        <span class="brand-copy">
+          <strong>Veluxe Motors</strong>
+          <small>Seller Module</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="register.html">Register</a>
+        <a href="login.html">Login</a>
+        <a href="add-car.html" class="is-active">Add Car</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <section class="seller-hero reveal">
+        <div class="seller-hero-copy">
+          <p class="eyebrow">Vehicle publishing</p>
+          <h2>Present every car like it belongs on a real marketplace.</h2>
+          <p>This page feels closer to a genuine seller workspace by combining real vehicle photography, stronger hierarchy, live preview updates, and a dynamic recent inventory area.</p>
+          <div class="seller-tags">
+            <span>Real car imagery</span>
+            <span>Live listing preview</span>
+            <span>Dynamic seller inventory</span>
+          </div>
+        </div>
+        <div class="listing-preview" aria-hidden="true">
+          <div class="preview-top">
+            <span class="preview-badge">Featured</span>
+            <span class="preview-price">CNY 258,000</span>
+          </div>
+          <div class="preview-media">
+            <img
+              src="https://images.pexels.com/photos/13331881/pexels-photo-13331881.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              alt="Premium black sedan used as listing inspiration"
+              loading="lazy"
+            >
+          </div>
+          <div class="preview-meta">
+            <strong>BMW 530i</strong>
+            <span>Obsidian Black / 2022</span>
+          </div>
+        </div>
+      </section>
+
+      <div class="section-heading reveal reveal-delay-1">
+        <p class="eyebrow">Seller Listing</p>
+        <h1>Add a new vehicle advertisement</h1>
+        <p>Submit the required vehicle information below. The live card updates while you type, and the inventory panel below keeps the latest saved vehicles visible.</p>
+      </div>
+
+      <section class="insight-strip reveal reveal-delay-1" aria-label="Seller workspace snapshot">
+        <article class="stat-card">
+          <span>Live inventory</span>
+          <strong data-stat="cars">00</strong>
+          <p>Listings currently stored in the seller module.</p>
+        </article>
+        <article class="stat-card">
+          <span>Average price</span>
+          <strong data-stat="averagePrice">CNY 0</strong>
+          <p>A rolling price snapshot based on saved vehicles.</p>
+        </article>
+        <article class="stat-card">
+          <span>Seller session</span>
+          <strong data-stat="activeSellerShort">Guest</strong>
+          <p>Login is required before publishing a live listing.</p>
+        </article>
+      </section>
+
+      <section class="listing-workbench">
+        <form class="panel form-panel reveal reveal-delay-2" id="addCarForm" novalidate>
+          <div class="form-grid">
+            <label class="field">
+              <span>Colour</span>
+              <input type="text" name="colour" placeholder="Obsidian Black" required>
+              <small class="error-message"></small>
+            </label>
+            <label class="field">
+              <span>Model</span>
+              <input type="text" name="model" placeholder="BMW 530i" required>
+              <small class="error-message"></small>
+            </label>
+            <label class="field">
+              <span>Year</span>
+              <input type="number" name="year" placeholder="2022" min="1990" max="2035" required>
+              <small class="error-message"></small>
+            </label>
+            <label class="field">
+              <span>Location</span>
+              <input type="text" name="location" placeholder="Shanghai" required>
+              <small class="error-message"></small>
+            </label>
+            <label class="field">
+              <span>Price</span>
+              <input type="number" name="price" placeholder="258000" min="1" required>
+              <small class="error-message"></small>
+            </label>
+            <label class="field field-wide">
+              <span>Image of car</span>
+              <input type="url" name="image" placeholder="https://example.com/car.jpg">
+              <small class="hint">Optional. Leave blank to use a premium default car photo.</small>
+              <small class="error-message"></small>
+            </label>
+          </div>
+          <button class="button button-primary" type="submit">Publish listing</button>
+          <p class="form-status" id="addCarStatus" aria-live="polite"></p>
+        </form>
+
+        <aside class="panel live-preview-card reveal reveal-delay-3" aria-label="Live listing preview">
+          <p class="eyebrow">Live Preview</p>
+          <div class="live-preview-media">
+            <img
+              id="listingPreviewImage"
+              src="https://images.pexels.com/photos/13331881/pexels-photo-13331881.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              alt="Vehicle listing preview"
+              loading="lazy"
+            >
+          </div>
+          <div class="live-preview-content">
+            <h3 id="listingPreviewModel">BMW 530i</h3>
+            <p id="listingPreviewMeta">Obsidian Black / 2022 / Shanghai</p>
+            <div class="live-preview-chips">
+              <span id="listingPreviewSeller">Login required</span>
+              <span>Premium layout</span>
+            </div>
+            <div class="preview-price-block">
+              <span>Display price</span>
+              <strong id="listingPreviewPrice">CNY 258,000</strong>
+            </div>
+            <ul class="preview-checklist">
+              <li>Updates while you type model, colour, year, location, and price.</li>
+              <li>Uses a real vehicle photo by default or your custom image link.</li>
+              <li>Reflects the active seller session when the login page has been completed.</li>
+            </ul>
+          </div>
+        </aside>
+      </section>
+
+      <section class="inventory-grid">
+        <article class="panel guidance-panel reveal reveal-delay-2">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Listing Quality</p>
+              <h3>What makes a vehicle card feel premium</h3>
+            </div>
+            <span class="status-pill">Detailed post</span>
+          </div>
+          <ul class="feature-list">
+            <li>Use a clear model name and colour so the card feels realistic at first glance.</li>
+            <li>Keep year, price, and location consistent with the market segment you want to present.</li>
+            <li>If you add a custom image URL, choose a sharp dealership or exterior shot for stronger impact.</li>
+          </ul>
+          <div class="signal-list">
+            <div class="signal-row">
+              <span>Latest model</span>
+              <strong data-stat="latestModel">No listings yet</strong>
+            </div>
+            <div class="signal-row">
+              <span>Latest details</span>
+              <strong data-stat="latestMeta">Publish a vehicle to populate this panel.</strong>
+            </div>
+            <div class="signal-row">
+              <span>Inventory state</span>
+              <strong data-stat="carsLabel">0 live listings</strong>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel recent-panel reveal reveal-delay-3">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Recently Published</p>
+              <h3>Seller inventory snapshots</h3>
+            </div>
+            <span class="status-pill" data-stat="carsLabel">0 live listings</span>
+          </div>
+          <div class="recent-listings" id="recentListings"></div>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-shell">
+      <p>Veluxe Motors (c) 2026</p>
+      <div class="footer-links">
+        <a href="register.html">Register</a>
+        <a href="login.html">Login</a>
+        <a href="add-car.html">Add Car</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

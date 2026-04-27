@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seller Registration | Veluxe Motors Seller Module</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    (function () {
+      var key = "veluxe-page-transition";
+      try {
+        var raw = sessionStorage.getItem(key);
+        if (!raw) return;
+        var transition = JSON.parse(raw);
+        var current = location.pathname.split("/").pop().replace(".html", "");
+        if (!transition || transition.to !== current || Date.now() - transition.timestamp > 1800) {
+          sessionStorage.removeItem(key);
+          return;
+        }
+        document.documentElement.dataset.pageTransition = transition.direction === "backward" ? "backward" : "forward";
+      } catch (error) {
+        sessionStorage.removeItem(key);
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="register">
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="register.html">
+        <span class="brand-mark">V</span>
+        <span class="brand-copy">
+          <strong>Veluxe Motors</strong>
+          <small>Seller Module</small>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="register.html" class="is-active">Register</a>
+        <a href="login.html">Login</a>
+        <a href="add-car.html">Add Car</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container narrow">
+      <section class="seller-hero reveal">
+        <div class="seller-hero-copy">
+          <p class="eyebrow">Seller onboarding</p>
+          <h2>Build trust before the first car is even listed.</h2>
+          <p>Veluxe Motors uses a cleaner registration flow, realistic automotive visuals, and structured seller data to make the platform feel more dependable and premium.</p>
+          <div class="seller-tags">
+            <span>Verified seller profile</span>
+            <span>Premium brand tone</span>
+            <span>Buyer-facing credibility</span>
+          </div>
+        </div>
+        <div class="hero-visual-stack">
+          <div class="hero-photo-frame">
+            <img
+              class="hero-photo"
+              src="https://images.pexels.com/photos/7144255/pexels-photo-7144255.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              alt="Seller speaking with a customer at a modern car dealership"
+              loading="lazy"
+            >
+          </div>
+          <div class="floating-note">Consistent registration details make the website feel more reliable when the full buyer flow is integrated later.</div>
+        </div>
+      </section>
+
+      <div class="section-heading reveal reveal-delay-1">
+        <p class="eyebrow">Seller Module</p>
+        <h1>Register as a vehicle seller</h1>
+        <p>Complete the seller registration form using the validation rules required in the project document, then continue through the full seller journey.</p>
+      </div>
+
+      <section class="insight-strip reveal reveal-delay-1" aria-label="Platform snapshot">
+        <article class="stat-card">
+          <span>Registered sellers</span>
+          <strong data-stat="users">01</strong>
+          <p>Profiles already stored in the local seller module.</p>
+        </article>
+        <article class="stat-card">
+          <span>Live inventory</span>
+          <strong data-stat="cars">00</strong>
+          <p>Published vehicles ready to appear in the seller workspace.</p>
+        </article>
+        <article class="stat-card">
+          <span>Current session</span>
+          <strong data-stat="activeSellerShort">Guest</strong>
+          <p>Login after registration to unlock car publishing.</p>
+        </article>
+      </section>
+
+      <section class="journey-grid">
+        <article class="panel process-panel reveal reveal-delay-2">
+          <p class="eyebrow">Registration Journey</p>
+          <h3>Move from profile creation to listing access in three clean steps.</h3>
+          <div class="process-list">
+            <div class="process-step">
+              <span class="process-index">01</span>
+              <div>
+                <strong>Create a verified seller identity</strong>
+                <p>Use clean contact details so the platform can present your seller profile consistently beside future listings.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <span class="process-index">02</span>
+              <div>
+                <strong>Return through the login page</strong>
+                <p>Sign in with the new account to activate the seller session stored in the browser for this module.</p>
+              </div>
+            </div>
+            <div class="process-step">
+              <span class="process-index">03</span>
+              <div>
+                <strong>Publish your first premium vehicle card</strong>
+                <p>Once logged in, the Add Car page lets you type into a live preview and generate a more convincing marketplace feel.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <aside class="panel side-panel reveal reveal-delay-3" aria-label="Seller readiness panel">
+          <p class="eyebrow">Seller Readiness</p>
+          <div class="status-pills">
+            <span class="status-pill">Profile ready</span>
+            <span class="status-pill">Contact checked</span>
+            <span class="status-pill">Listing access</span>
+          </div>
+          <div class="signal-list">
+            <div class="signal-row">
+              <span>Total sellers</span>
+              <strong data-stat="usersLabel">1 seller profile</strong>
+            </div>
+            <div class="signal-row">
+              <span>Live inventory</span>
+              <strong data-stat="carsLabel">0 live listings</strong>
+            </div>
+            <div class="signal-row">
+              <span>Current session</span>
+              <strong data-stat="activeSeller">Login required</strong>
+            </div>
+          </div>
+          <div class="support-note">
+            A tidy seller identity makes every later listing card feel more believable and easier for buyers to trust.
+          </div>
+        </aside>
+      </section>
+
+      <section class="workspace-grid">
+        <form class="panel form-panel reveal reveal-delay-2" id="registrationForm" novalidate>
+          <div class="form-grid">
+            <label class="field">
+              <span>Name</span>
+              <input type="text" name="name" placeholder="Wei Zhang" required>
+              <small class="error-message"></small>
+            </label>
+            <label class="field">
+              <span>Address</span>
+              <input type="text" name="address" placeholder="88 Pudong Avenue 1" required>
+              <small class="error-message"></small>
+            </label>
+            <label class="field">
+              <span>Phone number</span>
+              <input type="tel" name="phone" placeholder="13800138000" required>
+              <small class="error-message"></small>
+            </label>
+            <label class="field">
+              <span>Email address</span>
+              <input type="email" name="email" placeholder="seller@example.com" required>
+              <small class="error-message"></small>
+            </label>
+            <label class="field">
+              <span>Username</span>
+              <input type="text" name="username" placeholder="seller01" required>
+              <small class="error-message"></small>
+            </label>
+            <label class="field">
+              <span>Password</span>
+              <input type="password" name="password" placeholder="At least 6 letters or numbers" required>
+              <small class="error-message"></small>
+            </label>
+          </div>
+          <button class="button button-primary" type="submit">Create seller account</button>
+          <p class="form-status" id="registrationStatus" aria-live="polite"></p>
+        </form>
+
+        <aside class="panel side-panel reveal reveal-delay-3" aria-label="Onboarding benefits">
+          <p class="eyebrow">Why This Page Feels Richer</p>
+          <ul class="feature-list">
+            <li>Structured seller identity gives every future listing a clear owner and more credible marketplace context.</li>
+            <li>The layout now combines content, metrics, process guidance, and form actions instead of showing a single plain form.</li>
+            <li>Soft motion, layered cards, and richer sections help the interface feel more like a polished website module.</li>
+          </ul>
+          <div class="support-note soft">
+            After registration, open the Login page and then the Add Car page to experience the full sliding seller flow.
+          </div>
+        </aside>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-shell">
+      <p>Veluxe Motors (c) 2026</p>
+      <div class="footer-links">
+        <a href="register.html">Register</a>
+        <a href="login.html">Login</a>
+        <a href="add-car.html">Add Car</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
