@@ -10,18 +10,18 @@
   <!-- Navigation -->
   <nav class="navbar">
     <div class="container">
-      <a href="index.html" class="logo">Online<span>Car</span>Sale</a>
+      <a href="../Chen Zhuohui/homepage.html" class="logo">Online<span>Car</span>Sale</a>
       <button class="mobile-menu-btn" aria-label="Toggle menu">
         <span></span>
         <span></span>
         <span></span>
       </button>
       <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="search.html">Search</a></li>
-        <li><a href="seller-registration.html">Register</a></li>
-        <li><a href="login.html">Login</a></li>
-        <li><a href="add-car.html">Add Car</a></li>
+        <li><a href="../Chen Zhuohui/homepage.html">Home</a></li>
+        <li><a href="../Bi Qinzhi/search.html">Search</a></li>
+        <li><a href="../Liu Ruoqi/register.html">Register</a></li>
+        <li><a href="../Liu Ruoqi/login.html">Login</a></li>
+        <li><a href="../Liu Ruoqi/add-car.html">Add Car</a></li>
       </ul>
     </div>
   </nav>
@@ -42,7 +42,7 @@
               <div class="spec-value" id="carYear">-</div>
             </div>
             <div class="spec-item">
-              <div class="spec-label">Color</div>
+              <div class="spec-label">Type</div>
               <div class="spec-value" id="carColor">-</div>
             </div>
             <div class="spec-item">
@@ -56,7 +56,7 @@
           </div>
           <p id="carDescription" style="margin-bottom: 24px; line-height: 1.7;"></p>
           <div class="detail-actions">
-            <a href="search.html" class="btn btn-secondary">Back to Search</a>
+            <a href="../Bi Qinzhi/search.html" class="btn btn-secondary">Back to Search</a>
             <button class="btn btn-primary">Contact Seller</button>
           </div>
         </div>
@@ -69,22 +69,22 @@
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
-          <a href="index.html" class="logo">Online<span>Car</span>Sale</a>
+          <a href="../Chen Zhuohui/homepage.html" class="logo">Online<span>Car</span>Sale</a>
           <p>Your trusted platform for buying and selling premium vehicles. Quality cars, transparent prices.</p>
         </div>
         <div class="footer-links">
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="search.html">Search Cars</a></li>
+            <li><a href="../Chen Zhuohui/homepage.html">Home</a></li>
+            <li><a href="../Bi Qinzhi/search.html">Search Cars</a></li>
           </ul>
         </div>
         <div class="footer-links">
           <h4>Sellers</h4>
           <ul>
-            <li><a href="seller-registration.html">Register</a></li>
-            <li><a href="login.html">Login</a></li>
-            <li><a href="add-car.html">Add Car</a></li>
+            <li><a href="../Liu Ruoqi/register.html">Register</a></li>
+            <li><a href="../Liu Ruoqi/login.html">Login</a></li>
+            <li><a href="../Liu Ruoqi/add-car.html">Add Car</a></li>
           </ul>
         </div>
         <div class="footer-links">
@@ -108,26 +108,50 @@
       const carId = urlParams.get('id');
 
       if (!carId) {
-        document.getElementById('detailContainer').innerHTML = '<div style="text-align:center;padding:64px 0;"><h3>Vehicle not found</h3><p>Please return to search page</p><a href="search.html" class="btn btn-primary" style="margin-top:16px;">Go to Search</a></div>';
+        document.getElementById('detailContainer').innerHTML = '<div style="text-align:center;padding:64px 0;"><h3>Vehicle not found</h3><p>Please return to search page</p><a href="../Bi Qinzhi/search.html" class="btn btn-primary" style="margin-top:16px;">Go to Search</a></div>';
         return;
       }
 
-      const cars = JSON.parse(localStorage.getItem('carListings')) || [];
-      const car = cars.find(c => c.id === parseInt(carId));
+      function readCars(key) {
+        try {
+          return JSON.parse(localStorage.getItem(key)) || [];
+        } catch (error) {
+          return [];
+        }
+      }
+
+      function mapSellerCar(car) {
+        return {
+          id: car.id,
+          model: car.model,
+          year: car.year,
+          color: car.colour,
+          price: car.price,
+          location: car.location,
+          image: car.image,
+          description: `Seller listing from ${car.seller || 'verified seller'}. ${car.model} is available in ${car.location}.`,
+          stockCode: 'Seller Listing',
+          seller: car.seller
+        };
+      }
+
+      const cars = readCars('carListings');
+      const sellerCars = readCars('veluxe-cars').map(mapSellerCar);
+      const car = [...cars, ...sellerCars].find(c => String(c.id) === String(carId));
 
       if (!car) {
-        document.getElementById('detailContainer').innerHTML = '<div style="text-align:center;padding:64px 0;"><h3>Vehicle not found</h3><p>The vehicle you are looking for does not exist</p><a href="search.html" class="btn btn-primary" style="margin-top:16px;">Go to Search</a></div>';
+        document.getElementById('detailContainer').innerHTML = '<div style="text-align:center;padding:64px 0;"><h3>Vehicle not found</h3><p>The vehicle you are looking for does not exist</p><a href="../Bi Qinzhi/search.html" class="btn btn-primary" style="margin-top:16px;">Go to Search</a></div>';
         return;
       }
 
       document.getElementById('carImage').src = car.image;
       document.getElementById('carImage').alt = car.model;
       document.getElementById('carModel').textContent = car.model;
-      document.getElementById('carPrice').textContent = '¥' + car.price.toLocaleString();
+      document.getElementById('carPrice').textContent = 'RMB ' + car.price.toLocaleString();
       document.getElementById('carYear').textContent = car.year;
-      document.getElementById('carColor').textContent = car.color;
+      document.getElementById('carColor').textContent = car.color || car.colour || car.bodyType || '-';
       document.getElementById('carLocation').textContent = car.location;
-      document.getElementById('carId').textContent = '#' + car.id;
+      document.getElementById('carId').textContent = car.stockCode || ('#' + car.id);
       document.getElementById('carDescription').textContent = car.description || 'No description available.';
     });
   </script>
