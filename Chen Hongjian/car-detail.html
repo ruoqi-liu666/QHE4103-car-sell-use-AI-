@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Details - Online Car Sale</title>
+  <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">Online<span>Car</span>Sale</a>
+      <button class="mobile-menu-btn" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="search.html">Search</a></li>
+        <li><a href="seller-registration.html">Register</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="add-car.html">Add Car</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Detail Section -->
+  <section class="detail-section">
+    <div class="container">
+      <div class="detail-grid" id="detailContainer">
+        <div>
+          <img id="carImage" src="" alt="" class="detail-image">
+        </div>
+        <div class="detail-info">
+          <h1 id="carModel">Loading...</h1>
+          <div class="detail-price" id="carPrice">-</div>
+          <div class="detail-specs">
+            <div class="spec-item">
+              <div class="spec-label">Year</div>
+              <div class="spec-value" id="carYear">-</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Color</div>
+              <div class="spec-value" id="carColor">-</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">Location</div>
+              <div class="spec-value" id="carLocation">-</div>
+            </div>
+            <div class="spec-item">
+              <div class="spec-label">ID</div>
+              <div class="spec-value" id="carId">-</div>
+            </div>
+          </div>
+          <p id="carDescription" style="margin-bottom: 24px; line-height: 1.7;"></p>
+          <div class="detail-actions">
+            <a href="search.html" class="btn btn-secondary">Back to Search</a>
+            <button class="btn btn-primary">Contact Seller</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">Online<span>Car</span>Sale</a>
+          <p>Your trusted platform for buying and selling premium vehicles. Quality cars, transparent prices.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="search.html">Search Cars</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Sellers</h4>
+          <ul>
+            <li><a href="seller-registration.html">Register</a></li>
+            <li><a href="login.html">Login</a></li>
+            <li><a href="add-car.html">Add Car</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Support</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Online Car Sale. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const carId = urlParams.get('id');
+
+      if (!carId) {
+        document.getElementById('detailContainer').innerHTML = '<div style="text-align:center;padding:64px 0;"><h3>Vehicle not found</h3><p>Please return to search page</p><a href="search.html" class="btn btn-primary" style="margin-top:16px;">Go to Search</a></div>';
+        return;
+      }
+
+      const cars = JSON.parse(localStorage.getItem('carListings')) || [];
+      const car = cars.find(c => c.id === parseInt(carId));
+
+      if (!car) {
+        document.getElementById('detailContainer').innerHTML = '<div style="text-align:center;padding:64px 0;"><h3>Vehicle not found</h3><p>The vehicle you are looking for does not exist</p><a href="search.html" class="btn btn-primary" style="margin-top:16px;">Go to Search</a></div>';
+        return;
+      }
+
+      document.getElementById('carImage').src = car.image;
+      document.getElementById('carImage').alt = car.model;
+      document.getElementById('carModel').textContent = car.model;
+      document.getElementById('carPrice').textContent = '¥' + car.price.toLocaleString();
+      document.getElementById('carYear').textContent = car.year;
+      document.getElementById('carColor').textContent = car.color;
+      document.getElementById('carLocation').textContent = car.location;
+      document.getElementById('carId').textContent = '#' + car.id;
+      document.getElementById('carDescription').textContent = car.description || 'No description available.';
+    });
+  </script>
+</body>
+</html>
