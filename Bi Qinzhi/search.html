@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Car Search</title>
+    <link rel="stylesheet" href="search.css">
+</head>
+<body>
+    <div class="page-shell">
+        <nav class="navbar">
+            <a href="../Chen Zhuohui/homepage.html" class="nav-brand">
+                <span class="brand-mark">A</span>
+                <div class="brand-copy">
+                    <strong>Aurelia Auto</strong>
+                    <span>Premium Vehicle Gallery</span>
+                </div>
+            </a>
+            <div class="nav-links">
+                <a href="../Chen Zhuohui/homepage.html">Home</a>
+                <a href="search.html" class="is-active">Search</a>
+                <a href="../Liu Ruoqi/add-car.html">Sell</a>
+                <a href="../Liu Ruoqi/login.html">Login</a>
+            </div>
+        </nav>
+
+        <main class="search-container">
+            <section class="hero-panel">
+                <div class="hero-copy">
+                    <p class="eyebrow">Curated Selection</p>
+                    <h1 class="page-title">Find a vehicle that reflects confidence, taste, and performance.</h1>
+                    <p class="page-subtitle">
+                        Explore a refined catalogue of luxury sedans, premium SUVs, and advanced new-energy models.
+                        Every listing is presented with a clean and trustworthy buying experience.
+                    </p>
+                </div>
+                <div class="hero-metrics">
+                    <div class="metric-card">
+                        <span class="metric-value">15+</span>
+                        <span class="metric-label">Selected Models</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-value">5</span>
+                        <span class="metric-label">Leading Brands</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-value">3</span>
+                        <span class="metric-label">Powertrain Types</span>
+                    </div>
+                </div>
+            </section>
+
+            <form class="search-form" id="searchForm">
+                <div class="search-form-header">
+                    <div>
+                        <p class="form-kicker">Search Filters</p>
+                        <h2>Refine the collection</h2>
+                    </div>
+                    <p class="form-note">Select brand, price range, and energy type to narrow down your choices.</p>
+                </div>
+
+                <div class="search-filters">
+                    <label class="filter-group" for="nameInput">
+                        <span>Model Name</span>
+                        <input class="filter-input" id="nameInput" type="text" placeholder="Search by model name">
+                    </label>
+
+                    <label class="filter-group" for="brandSelect">
+                        <span>Brand</span>
+                        <select class="filter-select" id="brandSelect">
+                            <option value="all">All Brands</option>
+                            <option value="mercedes">Mercedes-Benz</option>
+                            <option value="byd">BYD</option>
+                            <option value="toyota">Toyota</option>
+                            <option value="bmw">BMW</option>
+                            <option value="wuling">Wuling</option>
+                            <option value="seller">Seller Listings</option>
+                        </select>
+                    </label>
+
+                    <label class="filter-group" for="priceSelect">
+                        <span>Budget</span>
+                        <select class="filter-select" id="priceSelect">
+                            <option value="all">All Prices</option>
+                            <option value="low">Under 100k</option>
+                            <option value="mid">100k - 300k</option>
+                            <option value="high">Over 300k</option>
+                        </select>
+                    </label>
+
+                    <label class="filter-group" for="fuelSelect">
+                        <span>Powertrain</span>
+                        <select class="filter-select" id="fuelSelect">
+                            <option value="all">All Fuel Types</option>
+                            <option value="gasoline">Gasoline</option>
+                            <option value="hybrid">Hybrid</option>
+                            <option value="electric">Electric</option>
+                        </select>
+                    </label>
+                </div>
+
+                <button type="button" class="btn-primary" id="searchBtn">Search Inventory</button>
+            </form>
+
+            <section class="results-section">
+                <div class="results-header">
+                    <div>
+                        <p class="form-kicker">Search Results</p>
+                        <h2 class="section-title">Available vehicles</h2>
+                    </div>
+                    <p class="results-count" id="resultsCount">15 vehicles available</p>
+                </div>
+
+                <div class="car-list" id="carList">
+                    <article class="car-item" data-brand="mercedes" data-price="mid" data-fuel="gasoline">
+                        <div class="car-image-container">
+                            <img src="Textures/Bz E.png" alt="Mercedes E-Class">
+                        </div>
+                        <div class="car-info">
+                            <div class="car-topline">
+                                <span class="car-badge">Executive Sedan</span>
+                                <span class="car-code">MB-01</span>
+                            </div>
+                            <h3>Mercedes-Benz E-Class</h3>
+                            <p class="car-details">Sedan | Gasoline</p>
+                            <p class="car-description">Balanced comfort, elegant proportions, and a business-class cabin for daily premium driving.</p>
+                            <p class="car-price">RMB 299,000</p>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="car-item" data-brand="mercedes" data-price="high" data-fuel="gasoline">
+                        <div class="car-image-container">
+                            <img src="Textures/mbh.png" alt="Maybach S-Class">
+                        </div>
+                        <div class="car-info">
+                            <div class="car-topline">
+                                <span class="car-badge">Flagship Luxury</span>
+                                <span class="car-code">MB-02</span>
+                            </div>
+                            <h3>Maybach S-Class</h3>
+                            <p class="car-details">Luxury | Gasoline</p>
+                            <p class="car-description">An ultra-premium statement model with commanding presence and limousine-level refinement.</p>
+                            <p class="car-price">RMB 1,999,000</p>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="car-item" data-brand="mercedes" data-price="high" data-fuel="gasoline">
+                        <div class="car-image-container">
+                            <img src="Textures/bz g.png" alt="Mercedes G-Class">
+                        </div>
+                        <div class="car-info">
+                            <div class="car-topline">
+                                <span class="car-badge">Iconic SUV</span>
+                                <span class="car-code">MB-03</span>
+                            </div>
+                            <h3>Mercedes-Benz G-Class</h3>
+                            <p class="car-details">SUV | Gasoline</p>
+                            <p class="car-description">A recognizable luxury off-roader that combines prestige, power, and rugged capability.</p>
+                            <p class="car-price">RMB 1,845,000</p>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="car-item" data-brand="byd" data-price="mid" data-fuel="hybrid">
+                        <div class="car-image-container">
+                            <img src="Textures/byd h.png" alt="BYD Han DM">
+                        </div>
+                        <div class="car-info">
+                            <div class="car-topline">
+                                <span class="car-badge">Smart Hybrid</span>
+                                <span class="car-code">BY-01</span>
+                            </div>
+                            <h3>BYD Han DM</h3>
+                            <p class="car-details">Sedan | Hybrid</p>
+                            <p class="car-description">A sharp executive sedan offering efficient hybrid performance with a modern Chinese luxury feel.</p>
+                            <p class="car-price">RMB 149,000</p>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="car-item" data-brand="byd" data-price="mid" data-fuel="hybrid">
+                        <div class="car-image-container">
+                            <img src="Textures/BYD M9.png" alt="BYD M9">
+                        </div>
+                        <div class="car-info">
+                            <div class="car-topline">
+                                <span class="car-badge">Family Premium MPV</span>
+                                <span class="car-code">BY-02</span>
+                            </div>
+                            <h3>BYD M9 (Xia)</h3>
+                            <p class="car-details">MPV | Hybrid</p>
+                            <p class="car-description">Designed for upscale family travel with generous space, quiet comfort, and hybrid efficiency.</p>
+                            <p class="car-price">RMB 199,000</p>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="car-item" data-brand="byd" data-price="low" data-fuel="electric">
+                        <div class="car-image-container">
+                            <img src="Textures/BYD ho.png" alt="BYD Seagull">
+                        </div>
+                        <div class="car-info">
+                            <div class="car-topline">
+                                <span class="car-badge">Urban EV</span>
+                                <span class="car-code">BY-03</span>
+                            </div>
+                            <h3>BYD Seagull</h3>
+                            <p class="car-details">Micro | Electric</p>
+                            <p class="car-description">Compact, efficient, and city-friendly, with a fresh electric identity for everyday mobility.</p>
+                            <p class="car-price">RMB 60,000</p>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="car-item" data-brand="bmw" data-price="high" data-fuel="gasoline">
+                        <div class="car-image-container">
+                            <img src="Textures/m3.png" alt="BMW M3">
+                        </div>
+                        <div class="car-info">
+                            <div class="car-topline">
+                                <span class="car-badge">Performance Icon</span>
+                                <span class="car-code">BW-01</span>
+                            </div>
+                            <h3>BMW M3</h3>
+                            <p class="car-details">Sport | Gasoline</p>
+                            <p class="car-description">A motorsport-bred sedan with bold stance, precise handling, and unmistakable M character.</p>
+                            <p class="car-price">RMB 799,000</p>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="car-item" data-brand="bmw" data-price="high" data-fuel="gasoline">
+                        <div class="car-image-container">
+                            <img src="Textures/bm x6.png" alt="BMW X6">
+                        </div>
+                        <div class="car-info">
+                            <div class="car-topline">
+                                <span class="car-badge">Coupe SUV</span>
+                                <span class="car-code">BW-02</span>
+                            </div>
+                            <h3>BMW X6</h3>
+                            <p class="car-details">SUV | Gasoline</p>
+                            <p class="car-description">A confident luxury SUV coupe with athletic surfaces and a distinctly premium road presence.</p>
+                            <p class="car-price">RMB 599,000</p>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="car-item" data-brand="bmw" data-price="high" data-fuel="hybrid">
+                        <div class="car-image-container">
+                            <img src="Textures/bm m5.png" alt="BMW M5 PHEV">
+                        </div>
+                        <div class="car-info">
+                            <div class="car-topline">
+                                <span class="car-badge">Hybrid Performance</span>
+                                <span class="car-code">BW-03</span>
+                            </div>
+                            <h3>BMW M5 PHEV</h3>
+                            <p class="car-details">Sport | Hybrid</p>
+                            <p class="car-description">A powerful electrified supersedan for drivers who want speed without sacrificing sophistication.</p>
+                            <p class="car-price">RMB 1,160,000</p>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="car-item" data-brand="toyota" data-price="high" data-fuel="hybrid">
+                        <div class="car-image-container">
+                            <img src="Textures/Ft Prado.png" alt="Toyota Prado">
+                        </div>
+                        <div class="car-info">
+                            <div class="car-topline">
+                                <span class="car-badge">Adventure Luxury</span>
+                                <span class="car-code">TY-01</span>
+                            </div>
+                            <h3>Toyota Prado</h3>
+                            <p class="car-details">SUV | Hybrid</p>
+                            <p class="car-description">Trusted durability and commanding SUV capability presented in a polished, high-value package.</p>
+                            <p class="car-price">RMB 400,000</p>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="car-item" data-brand="toyota" data-price="mid" data-fuel="electric">
+                        <div class="car-image-container">
+                            <img src="Textures/Ft bz.png" alt="Toyota Bozhi 3X">
+                        </div>
+                        <div class="car-info">
+                            <div class="car-topline">
+                                <span class="car-badge">New Energy SUV</span>
+                                <span class="car-code">TY-02</span>
+                            </div>
+                            <h3>Toyota Bozhi 3X</h3>
+                            <p class="car-details">SUV | Electric</p>
+                            <p class="car-description">A clean-lined electric SUV built for practical ownership and a calm, modern driving experience.</p>
+                            <p class="car-price">RMB 109,000</p>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="car-item" data-brand="toyota" data-price="high" data-fuel="gasoline">
+                        <div class="car-image-container">
+                            <img src="Textures/ft pc.png" alt="Toyota Supra">
+                        </div>
+                        <div class="car-info">
+                            <div class="car-topline">
+                                <span class="car-badge">Pure Sports</span>
+                                <span class="car-code">TY-03</span>
+                            </div>
+                            <h3>Toyota Supra</h3>
+                            <p class="car-details">Sport | Gasoline</p>
+                            <p class="car-description">A low-slung performance coupe with a driver-focused cabin and timeless enthusiast appeal.</p>
+                            <p class="car-price">RMB 495,000</p>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="car-item" data-brand="wuling" data-price="low" data-fuel="gasoline">
+                        <div class="car-image-container">
+                            <img src="Textures/wl hg.png" alt="Wuling Hongguang">
+                        </div>
+                        <div class="car-info">
+                            <div class="car-topline">
+                                <span class="car-badge">Utility MPV</span>
+                                <span class="car-code">WL-01</span>
+                            </div>
+                            <h3>Wuling Hongguang</h3>
+                            <p class="car-details">MPV | Gasoline</p>
+                            <p class="car-description">A proven people-mover with straightforward value and practical versatility for daily use.</p>
+                            <p class="car-price">RMB 50,000</p>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="car-item" data-brand="wuling" data-price="low" data-fuel="hybrid">
+                        <div class="car-image-container">
+                            <img src="Textures/wl xg.png" alt="Wuling Starlight PHEV">
+                        </div>
+                        <div class="car-info">
+                            <div class="car-topline">
+                                <span class="car-badge">Affordable Hybrid</span>
+                                <span class="car-code">WL-02</span>
+                            </div>
+                            <h3>Wuling Starlight PHEV</h3>
+                            <p class="car-details">Sedan | Hybrid</p>
+                            <p class="car-description">An efficient sedan blending accessible pricing with contemporary new-energy appeal.</p>
+                            <p class="car-price">RMB 69,000</p>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </article>
+
+                    <article class="car-item" data-brand="wuling" data-price="mid" data-fuel="electric">
+                        <div class="car-image-container">
+                            <img src="Textures/Wl zt.png" alt="Wuling Zhengcheng EV">
+                        </div>
+                        <div class="car-info">
+                            <div class="car-topline">
+                                <span class="car-badge">Commercial EV</span>
+                                <span class="car-code">WL-03</span>
+                            </div>
+                            <h3>Wuling Zhengcheng EV</h3>
+                            <p class="car-details">MPV | Electric</p>
+                            <p class="car-description">A spacious electric MPV tailored to urban logistics and modern utility scenarios.</p>
+                            <p class="car-price">RMB 140,000</p>
+                            <button class="btn-secondary">View Details</button>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="empty-state" id="emptyState" hidden>
+                    <p class="empty-title">No vehicles match your current filters.</p>
+                    <p class="empty-copy">Try broadening the brand, budget, or powertrain options to view more models.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="search.js"></script>
+</body>
+</html>

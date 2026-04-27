@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AutoElite - AI-Powered Car Trading Platform</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Page-specific styles */
+    .nav-logo-svg { display: flex; align-items: center; gap: 10px; }
+  </style>
+</head>
+<body>
+
+  <!-- Page Loader -->
+  <div class="page-loader" id="pageLoader">
+    <div class="loader-spinner"></div>
+  </div>
+
+  <!-- ========== Navbar ========== -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="homepage.html" class="nav-logo">
+        <svg class="nav-logo-svg" width="38" height="38" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="120" height="120" rx="28" fill="#111111"/>
+          <path d="M60 22L28 88h14l6-14h24l6 14h14L60 22zm0 22l10 24H50l10-24z" fill="#C9A96B"/>
+          <path d="M38 94h44" stroke="#C9A96B" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="94" cy="36" r="8" fill="none" stroke="#C9A96B" stroke-width="3"/>
+          <path d="M99 41l6 6" stroke="#C9A96B" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        AutoElite
+      </a>
+
+      <div class="nav-links">
+        <a href="homepage.html" class="active">Home</a>
+        <a href="../Bi Qinzhi/search.html">Search</a>
+        <a href="../Liu Ruoqi/add-car.html">Sell</a>
+        <a href="../Chen Hongjian/car-detail.html">Details</a>
+      </div>
+
+      <div class="nav-actions">
+        <a href="../Liu Ruoqi/login.html" class="btn btn-sm btn-outline">Sign In</a>
+        <a href="../Liu Ruoqi/register.html" class="btn btn-sm btn-primary">Sign Up</a>
+      </div>
+
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Nav -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="homepage.html">Home</a>
+    <a href="../Bi Qinzhi/search.html">Search Cars</a>
+    <a href="../Liu Ruoqi/add-car.html">Sell Your Car</a>
+    <a href="../Chen Hongjian/car-detail.html">Car Details</a>
+    <a href="../Liu Ruoqi/login.html">Sign In / Sign Up</a>
+  </div>
+
+  <!-- ========== Hero ========== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content fade-in">
+        <div class="hero-tag">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          AI-Powered Car Trading Platform
+        </div>
+        <h1>Find Your <span class="accent">Perfect Ride</span><br>Starts Here</h1>
+        <p>Powered by artificial intelligence for precise valuations and smart matching,<br>making every transaction safe, transparent, and efficient.</p>
+
+        <form class="hero-search" action="../Bi Qinzhi/search.html" method="get">
+          <input type="text" class="input" placeholder="Search by brand, model, or keyword..." name="q">
+          <button type="submit" class="btn btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            Search
+          </button>
+        </form>
+      </div>
+
+      <div class="hero-stats fade-in">
+        <div class="hero-stat">
+          <div class="number">12,800<span class="accent">+</span></div>
+          <div class="label">Cars Listed</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number">5,600<span class="accent">+</span></div>
+          <div class="label">Verified Sellers</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number">98<span class="accent">%</span></div>
+          <div class="label">Satisfaction</div>
+        </div>
+        <div class="hero-stat">
+          <div class="number">AI</div>
+          <div class="label">Smart Valuation</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Features / 业务简介 ========== -->
+  <section class="features" id="features">
+    <div class="container">
+      <div class="features-header fade-in">
+        <div class="section-title">Why Choose <span class="accent">AutoElite</span></div>
+        <p class="section-subtitle">We drive trust through technology, making car trading simple, secure, and transparent</p>
+      </div>
+
+      <div class="features-grid">
+        <!-- Card 1 -->
+        <div class="feature-card fade-in fade-in-delay-1">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9A96B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <h3>Smart Search</h3>
+          <p>AI-powered search engine that precisely matches the right vehicles based on your preferences and budget.</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="feature-card fade-in fade-in-delay-2">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9A96B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48 2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48 2.83-2.83"/></svg>
+          </div>
+          <h3>AI Valuation</h3>
+          <p>Real-time precise vehicle valuations using big data and machine learning, eliminating information asymmetry.</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="feature-card fade-in fade-in-delay-3">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9A96B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Secure Trading</h3>
+          <p>Full-process transaction protection with certified inspection reports, ensuring authenticity and quality.</p>
+        </div>
+        <!-- Card 4 -->
+        <div class="feature-card fade-in fade-in-delay-1">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9A96B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <h3>Easy Selling</h3>
+          <p>One-click listing with AI-generated descriptions, instantly reaching thousands of potential buyers.</p>
+        </div>
+        <!-- Card 5 -->
+        <div class="feature-card fade-in fade-in-delay-2">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9A96B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Community</h3>
+          <p>Active owner community with genuine reviews, helping you make smarter purchasing decisions.</p>
+        </div>
+        <!-- Card 6 -->
+        <div class="feature-card fade-in fade-in-delay-3">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#C9A96B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          </div>
+          <h3>Market Insights</h3>
+          <p>Real-time market data and trend analysis to help you seize the best timing and maximize value.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Featured Cars / 精选车辆 ========== -->
+  <section class="featured-cars" id="cars">
+    <div class="container">
+      <div class="featured-header fade-in">
+        <div>
+          <div class="section-title">Featured <span class="accent">Premium Cars</span></div>
+          <p class="section-subtitle">Rigorously certified quality vehicles, handpicked for you</p>
+        </div>
+        <a href="../Bi Qinzhi/search.html" class="btn btn-outline btn-sm">View All &rarr;</a>
+      </div>
+
+      <div class="car-grid">
+        <!-- Car 1 -->
+        <a href="../Bi Qinzhi/search.html" class="car-card fade-in fade-in-delay-1">
+          <div class="car-image">
+            <span class="car-badge">Certified</span>
+            <div class="car-placeholder">
+              <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#BBB" stroke-width="1.5"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/><path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/><path d="M5 17H3v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2"/><path d="M9 17h6"/><path d="M14 6l-3-3"/></svg>
+            </div>
+          </div>
+          <div class="car-info">
+            <h3>Mercedes-Benz C260L Sport</h3>
+            <div class="car-meta">
+              <span>2023</span>
+              <span>12K km</span>
+              <span>Auto</span>
+            </div>
+            <div class="car-price">$38,500<span class="unit"></span></div>
+          </div>
+        </a>
+        <!-- Car 2 -->
+        <a href="../Bi Qinzhi/search.html" class="car-card fade-in fade-in-delay-2">
+          <div class="car-image">
+            <span class="car-badge">Popular</span>
+            <div class="car-placeholder">
+              <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#BBB" stroke-width="1.5"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/><path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/><path d="M5 17H3v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2"/><path d="M9 17h6"/><path d="M14 6l-3-3"/></svg>
+            </div>
+          </div>
+          <div class="car-info">
+            <h3>BMW 325Li Luxury</h3>
+            <div class="car-meta">
+              <span>2022</span>
+              <span>35K km</span>
+              <span>Auto</span>
+            </div>
+            <div class="car-price">$35,800<span class="unit"></span></div>
+          </div>
+        </a>
+        <!-- Car 3 -->
+        <a href="../Bi Qinzhi/search.html" class="car-card fade-in fade-in-delay-3">
+          <div class="car-image">
+            <span class="car-badge">New</span>
+            <div class="car-placeholder">
+              <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#BBB" stroke-width="1.5"><path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/><path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/><path d="M5 17H3v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2"/><path d="M9 17h6"/><path d="M14 6l-3-3"/></svg>
+            </div>
+          </div>
+          <div class="car-info">
+            <h3>Tesla Model 3 Long Range</h3>
+            <div class="car-meta">
+              <span>2024</span>
+              <span>8K km</span>
+              <span>Electric</span>
+            </div>
+            <div class="car-price">$32,900<span class="unit"></span></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA Section ========== -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-grid">
+        <!-- Buyer CTA -->
+        <div class="cta-card buyer fade-in fade-in-delay-1">
+          <span class="cta-tag">For Buyers</span>
+          <h3>Thousands of Quality Cars<br>Waiting for You</h3>
+          <p>Smart search + AI recommendations to quickly find the perfect car, with a worry-free experience.</p>
+          <a href="../Bi Qinzhi/search.html" class="btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            Browse Cars
+          </a>
+        </div>
+        <!-- Seller CTA -->
+        <div class="cta-card seller fade-in fade-in-delay-2">
+          <span class="cta-tag">For Sellers</span>
+          <h3>List Easily<br>Sell Faster</h3>
+          <p>AI valuation, one-click listing, and precise buyer matching to get the best price for your car.</p>
+          <a href="../Liu Ruoqi/add-car.html" class="btn btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            List Your Car
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Footer ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <svg width="30" height="30" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="120" height="120" rx="28" fill="#1F1F1F"/>
+              <path d="M60 22L28 88h14l6-14h24l6 14h14L60 22zm0 22l10 24H50l10-24z" fill="#C9A96B"/>
+              <path d="M38 94h44" stroke="#C9A96B" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="94" cy="36" r="8" fill="none" stroke="#C9A96B" stroke-width="3"/>
+              <path d="M99 41l6 6" stroke="#C9A96B" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+            AutoElite
+          </div>
+          <p>A next-generation AI-powered car trading platform, committed to making every transaction safe, transparent, and efficient.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <a href="homepage.html">Home</a>
+          <a href="../Bi Qinzhi/search.html">Search Cars</a>
+          <a href="../Chen Hongjian/car-detail.html">Car Details</a>
+          <a href="../Liu Ruoqi/add-car.html">Sell Your Car</a>
+          <a href="../Liu Ruoqi/login.html">Sign In / Sign Up</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Support</h4>
+          <a href="#">Help Center</a>
+          <a href="#">Trade Protection</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Contact Us</h4>
+          <a href="#">service@autoelite.com</a>
+          <a href="#">+1 (888) 666-8800</a>
+          <a href="#">Mon - Fri, 9:00 - 18:00</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 AutoElite. All rights reserved.</span>
+        <span>AI-Powered Car Trading Platform</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== JavaScript ========== -->
+  <script>
+    // --- Page Loader ---
+    window.addEventListener('load', () => {
+      document.getElementById('pageLoader').classList.add('hidden');
+    });
+
+    // --- Navbar scroll effect ---
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // --- Hamburger Menu ---
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileNav.classList.toggle('active');
+      document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+    });
+
+    // Close mobile nav on link click
+    mobileNav.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        mobileNav.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // --- Scroll Fade-In Animation ---
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -40px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
